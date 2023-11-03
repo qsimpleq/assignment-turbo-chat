@@ -1,8 +1,8 @@
 require:
   - rubocop-performance
-  - rubocop-erb
   - rubocop-rails
   - rubocop-rake
+  - rubocop-slim
 
 AllCops:
   NewCops: enable

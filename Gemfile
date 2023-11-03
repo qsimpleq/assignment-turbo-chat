@@ -58,10 +58,10 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
   gem 'ffaker'
   gem 'rubocop', require: false
-  gem 'rubocop-erb', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rake', require: false
+  gem 'rubocop-slim', require: false
 end
 
 group :development do
