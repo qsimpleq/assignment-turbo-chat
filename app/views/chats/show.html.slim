@@ -1,0 +1,11 @@
+p style="color: green" = notice
+
+== render @chat
+
+div
+  - if chat_owner?(@chat)
+    => link_to "Edit this chat", edit_chat_path(@chat)
+    '|
+  =< link_to "Back to chats", chats_path
+  - if chat_owner?(@chat)
+    = button_to "Destroy this chat", @chat, method: :delete

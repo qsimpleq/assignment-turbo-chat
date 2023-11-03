@@ -8,6 +8,37 @@ html
     = csp_meta_tag
     = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
     = javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true
-  body
-    main.container
+  body.d-flex.flex-column.h-100
+    .container.mb-2
+      .d-flex.flex-wrap.align-items-center.py-2.border-bottom
+        .navbar.navbar-expand-md.navbar-light.me-auto
+          ul.nav.nav-pills
+            li.nav-item.me-2
+              = link_to t('.chats'), chats_path, class: 'nav-link link-dark'
+            - if user_signed_in?
+              li.nav-item.me-2
+                = link_to t('.new_chat'), new_chat_path, class: 'nav-link link-dark'
+
+              li.nav-item.me-2
+                a.nav-link.disabled = current_user.email
+
+              li.nav-item.me-2
+                = link_to t('.log_out'), destroy_user_session_path, \
+                                        class: 'nav-link link-dark', \
+                                        data: { turbo_method: :delete }, \
+                                        'aria-label': t('.log_out')
+            - else
+              - unless current_page?(new_user_registration_path)
+                li.nav-item.me-2
+                  = link_to t('.sign_up'), new_user_registration_path, \
+                                          class: 'nav-link link-dark', \
+                                          'aria-label': t('.sign_up')
+              - unless current_page?(new_user_session_path)
+                li.nav-item.me-2
+                  = link_to t('.log_in'), user_registration_path, \
+                                          class: 'nav-link link-dark', \
+                                          data: { turbo_method: :patch }, \
+                                          'aria-label': t('.log_in')
+
+    main.container.mt-4.mb-5.pb-5
       = yield
