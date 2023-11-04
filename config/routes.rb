@@ -3,9 +3,8 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :chats do
-    resources :messages, only: %i[new create index]
+    resources :messages, only: :create
   end
-  resources :messages, except: %i[new create index]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
