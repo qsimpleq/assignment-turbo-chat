@@ -8,7 +8,10 @@ class ChatsController < ApplicationController
   end
 
   # GET /chats/1 or /chats/1.json
-  def show; end
+  def show
+    @messages = Chat.find(params[:id]).messages.includes(:user).order(created_at: :asc)
+    @new_message = Message.new(chat_id: @chat.id, user_id: @chat.id)
+  end
 
   # GET /chats/new
   def new

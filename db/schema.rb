@@ -13,7 +13,7 @@
 ActiveRecord::Schema[7.1].define(version: 2023_11_04_072807) do
   create_table "chats", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_chats_on_user_id"
@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_04_072807) do
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.integer "chat_id", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chat_id"], name: "index_messages_on_chat_id"
@@ -41,7 +41,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_04_072807) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "chats", "users"
   add_foreign_key "messages", "chats"
-  add_foreign_key "messages", "users"
 end

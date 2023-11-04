@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: %i[ show edit update destroy ]
+  before_action :set_message, only: %i[show edit update destroy]
 
   # GET /messages or /messages.json
   def index
@@ -7,17 +7,10 @@ class MessagesController < ApplicationController
   end
 
   # GET /messages/1 or /messages/1.json
-  def show
-  end
-
-  # GET /messages/new
-  def new
-    @message = Message.new
-  end
+  def show; end
 
   # GET /messages/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /messages or /messages.json
   def create
@@ -25,7 +18,9 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to message_url(@message), notice: "Message was successfully created." }
+        format.html do
+          redirect_back_or_to @message.chat, notice: 'Message was successfully created.'
+        end
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +33,7 @@ class MessagesController < ApplicationController
   def update
     respond_to do |format|
       if @message.update(message_params)
-        format.html { redirect_to message_url(@message), notice: "Message was successfully updated." }
+        format.html { redirect_to message_url(@message), notice: 'Message was successfully updated.' }
         format.json { render :show, status: :ok, location: @message }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,22 +44,24 @@ class MessagesController < ApplicationController
 
   # DELETE /messages/1 or /messages/1.json
   def destroy
+    chat = @message.chat_id
     @message.destroy!
 
     respond_to do |format|
-      format.html { redirect_to messages_url, notice: "Message was successfully destroyed." }
+      format.html { redirect_back_or_to chat, notice: 'Message was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_message
-      @message = Message.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def message_params
-      params.require(:message).permit(:body, :chat_id, :user_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_message
+    @message = Message.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def message_params
+    params.require(:message).permit(:body, :chat_id, :user_id)
+  end
 end

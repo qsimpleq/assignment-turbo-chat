@@ -15,6 +15,7 @@ html
           ul.nav.nav-pills
             li.nav-item.me-2
               = link_to t('.chats'), chats_path, class: 'nav-link link-dark'
+
             - if user_signed_in?
               li.nav-item.me-2
                 = link_to t('.new_chat'), new_chat_path, class: 'nav-link link-dark'
