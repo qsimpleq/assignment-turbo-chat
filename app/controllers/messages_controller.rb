@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class MessagesController < ApplicationController
-  before_action :authenticate_user!, only: %i[create]
+  before_action :authenticate_user!, only: %i[new create]
+
+  def new
+    @message = Message.new(chat_id: params[:chat_id])
+  end
 
   # POST /messages or /messages.json
   def create
@@ -9,6 +13,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
+        format.turbo_stream
         format.html do
           redirect_back_or_to @message.chat, notice: 'Message was successfully created.'
         end

@@ -1,0 +1,6 @@
+.row.striped
+  .col-2[title=message.created_at]
+    = title=message.created_at.strftime('%Y-%m-%d %H:%M')
+  .col-2 = message.user&.email
+  .col
+    pre.mb-0 = message.body

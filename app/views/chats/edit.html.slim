@@ -1,6 +1,7 @@
 h1 Editing chat
 
-== render "form", chat: @chat
+= turbo_frame_tag 'chat' do
+  == render "form", chat: @chat
 
 br
 

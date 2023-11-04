@@ -1,0 +1,13 @@
+= turbo_frame_tag "new_message", target: '_top'
+  = simple_form_for([@message.chat, @message],
+    data: {controller: 'reset_form', action: 'turbo:submit-end->reset_form#reset'}) do |f|
+    = f.error_notification
+    = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+    .form-inputs
+      = f.input :body
+      = f.association :chat, as: :hidden, input_html: { value: @message.chat_id }
+      = f.association :user, as: :hidden, input_html: { value: current_user.id }
+
+    .form-actions
+      = f.button :submit, class: 'btn-success'

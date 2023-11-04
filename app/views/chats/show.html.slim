@@ -1,13 +1,14 @@
 p style="color: green" = notice
 
-== render @chat
+= turbo_frame_tag 'chat' do
+  == render 'chat', chat: @chat
 
-div
-  = link_to "Back to chats", chats_path, class: 'btn btn-secondary btn-sm me-2'
-  - if chat_owner?(@chat)
-    = link_to "Edit this chat", edit_chat_path(@chat), class: 'btn btn-primary btn-sm me-2'
-  - if chat_owner?(@chat)
-    = link_to "Destroy this chat", @chat, class: 'btn btn-danger btn-sm', data: { turbo_method: :delete }
+  div
+    = link_to "Back to chats", chats_path, class: 'btn btn-secondary btn-sm me-2', 'data-turbo-frame': '_top'
+    - if chat_owner?(@chat)
+      = link_to "Edit this chat", edit_chat_path(@chat), class: 'btn btn-primary btn-sm me-2'
+    - if chat_owner?(@chat)
+      = link_to "Destroy this chat", @chat, class: 'btn btn-danger btn-sm', data: { turbo_method: :delete }
 
 hr
 
@@ -15,23 +16,8 @@ h4 Chat
 
 #messages.overflow-auto[style="max-height: 300px;"]
   - @messages.each do |message|
-    .row.striped
-      .col-2[title=message.created_at]
-        = title=message.created_at.strftime('%Y-%m-%d %H:%M')
-      .col-2 = message.user&.email
-      .col
-        pre.mb-0 = message.body
+    == render 'messages/message', message:
 
 hr
 
-= simple_form_for(@new_message, url: chat_messages_path(@chat)) do |f|
-  = f.error_notification
-  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
-
-  .form-inputs
-    = f.input :body
-    = f.association :chat, as: :hidden, input_html: { value: @chat.id }
-    = f.association :user, as: :hidden, input_html: { value: current_user.id }
-
-  .form-actions
-    = f.button :submit, class: 'btn-success'
+= turbo_frame_tag "new_message", src: new_chat_message_path(@chat), target: '_top'
