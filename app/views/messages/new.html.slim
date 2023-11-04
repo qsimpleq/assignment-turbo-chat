@@ -1,6 +1,6 @@
-= turbo_frame_tag "new_message", target: '_top'
+= turbo_frame_tag 'new_message', target: '_top'
   = simple_form_for([@message.chat, @message],
-    data: {controller: 'reset_form', action: 'turbo:submit-end->reset_form#reset'}) do |f|
+    data: { controller: 'reset_form', action: 'turbo:submit-end->reset_form#reset' }) do |f|
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 

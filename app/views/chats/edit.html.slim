@@ -1,11 +1,11 @@
 h1 Editing chat
 
 = turbo_frame_tag 'chat' do
-  == render "form", chat: @chat
+  == render 'form', chat: @chat
 
 br
 
 div
-  => link_to "Show this chat", @chat
+  => link_to 'Show this chat', @chat
   '|
-  =< link_to "Back to chats", chats_path
+  =< link_to 'Back to chats', chats_path
