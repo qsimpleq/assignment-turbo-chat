@@ -6,7 +6,7 @@ class ChatsController < ApplicationController
 
   # GET /chats or /chats.json
   def index
-    @chats = Chat.all
+    @chats = Chat.includes(:user).order(created_at: :asc)
   end
 
   # GET /chats/1 or /chats/1.json
@@ -65,7 +65,7 @@ class ChatsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_chat
-    @chat = Chat.find(params[:id])
+    @chat = Chat.includes(:user).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
